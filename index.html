@@ -19,100 +19,64 @@
         * { box-sizing: border-box; cursor: crosshair; }
         
         body { 
-            background: var(--bg-color); 
-            color: var(--text-main); 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; 
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
-            overflow-x: hidden;
+            background: var(--bg-color); color: var(--text-main); 
+            font-family: 'Inter', sans-serif; margin: 0; 
+            display: flex; flex-direction: column; align-items: center; 
+            overflow-x: hidden; min-height: 100vh;
         }
 
-        #snow-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none;
-        }
+        #snow-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
-        /* ЗАГОЛОВОК С НОВЫМ ШРИФТОМ */
         header { padding: 100px 20px 40px; text-align: center; }
         .clan-logo { 
-            font-family: var(--font-logo);
-            font-size: clamp(1.5rem, 7vw, 3rem); 
-            letter-spacing: 18px; 
-            text-transform: uppercase;
-            color: var(--accent);
-            text-shadow: 0 0 30px rgba(255,255,255,0.2);
-            margin-bottom: 5px;
-            user-select: none;
+            font-family: var(--font-logo); font-size: clamp(1.5rem, 7vw, 3rem); 
+            letter-spacing: 18px; text-transform: uppercase; color: var(--accent);
+            text-shadow: 0 0 30px rgba(255,255,255,0.2); user-select: none;
         }
 
         .container { width: 100%; max-width: 1100px; padding: 20px; }
+        .category-title { font-size: 0.7rem; color: #444; letter-spacing: 8px; margin: 60px 0 30px; text-transform: uppercase; text-align: center; }
 
-        .category-title {
-            font-size: 0.7rem; color: #444; letter-spacing: 8px;
-            margin: 60px 0 30px; text-transform: uppercase; text-align: center;
-        }
-
-        /* КАРТОЧКИ */
-        .members-grid { 
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 35px; 
-        }
+        .members-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 35px; }
 
         .member-card { 
-            background: var(--card-bg); 
-            border: 1px solid #1a1a1a;
-            width: 310px; padding: 20px; 
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 2px;
+            background: var(--card-bg); border: 1px solid #1a1a1a;
+            width: 310px; padding: 20px; transition: 0.4s; border-radius: 4px;
         }
-        
-        .member-card:hover { 
-            border-color: #444; 
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-        }
+        .member-card:hover { border-color: #444; transform: translateY(-5px); }
 
         .photo-box {
-            width: 100%; height: 320px; 
-            background-size: cover; background-position: center;
-            filter: grayscale(1) contrast(1.2) brightness(0.6); 
-            margin-bottom: 20px; 
-            border: 1px solid #222;
-            transition: 0.5s;
-        }
-        .member-card:hover .photo-box { filter: grayscale(0.6) brightness(0.8); }
-
-        .name { 
-            font-family: var(--font-logo); font-size: 1rem; 
-            margin-bottom: 10px; letter-spacing: 3px; color: #fff;
+            width: 100%; height: 320px; background-size: cover; background-position: center;
+            filter: grayscale(1) brightness(0.6); margin-bottom: 20px; border: 1px solid #222;
         }
 
-        .quote {
-            font-family: var(--font-mono); font-size: 0.7rem;
-            color: #555; margin-bottom: 20px; font-style: italic; min-height: 45px;
-        }
+        .name { font-family: var(--font-logo); font-size: 1rem; margin-bottom: 10px; letter-spacing: 3px; color: #fff; }
+        .quote { font-family: var(--font-mono); font-size: 0.7rem; color: #555; margin-bottom: 20px; font-style: italic; min-height: 45px; }
 
         .btn {
             background: transparent; border: 1px solid #333; color: #888;
             padding: 12px; width: 100%; font-family: var(--font-mono);
-            text-transform: uppercase; font-size: 0.7rem; cursor: pointer;
-            transition: 0.3s;
+            text-transform: uppercase; font-size: 0.7rem; cursor: pointer; transition: 0.3s;
         }
         .btn:active { transform: scale(0.95); background: #fff; color: #000; box-shadow: 0 0 20px #fff; }
 
-        /* ПАСХАЛКА-ТЕРМИНАЛ */
+        /* МОДАЛЬНОЕ ОКНО */
+        .modal {
+            display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); align-items: center; justify-content: center; backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: #111; border: 1px solid #333; padding: 40px; max-width: 450px; width: 90%; text-align: center;
+        }
+        .m-bio { color: #888; font-size: 0.95rem; margin: 30px 0; line-height: 1.8; }
+        .contact-link { display: inline-block; padding: 14px 30px; border: 1px solid #fff; color: #fff; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; }
+
+        /* ТЕРМИНАЛ */
         #secret-terminal {
-            display: none; position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%; max-width: 500px;
-            background: #000; border: 1px solid #333;
-            padding: 30px; z-index: 2000; font-family: var(--font-mono);
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90%; max-width: 400px; background: #000; border: 1px solid #333; padding: 30px; z-index: 10000; font-family: var(--font-mono);
         }
-        #secret-terminal input {
-            background: transparent; border: none; border-bottom: 1px solid #333;
-            color: #0f0; width: 100%; outline: none; padding: 10px 0; margin-top: 20px;
-        }
+        #secret-terminal input { background: transparent; border: none; border-bottom: 1px solid #333; color: #0f0; width: 100%; outline: none; padding: 10px 0; margin-top: 20px; }
 
         footer { padding: 100px; color: #1a1a1a; font-size: 0.6rem; letter-spacing: 10px; text-align: center; }
     </style>
@@ -127,40 +91,49 @@
 
     <header>
         <div class="clan-logo" id="logo-trigger">Холодная Смерть</div>
-        <div style="color: #222; font-size: 0.6rem; letter-spacing: 5px;">[ ENCRYPTED_CORE ]</div>
+        <div style="color: #222; font-size: 0.6rem; letter-spacing: 5px; margin-top: 10px;">[ LEGACY SYSTEM ]</div>
     </header>
 
     <div class="container">
-        <h2 class="category-title">System Administrators</h2>
+        <h2 class="category-title">Administration</h2>
         <div class="members-grid">
             <div class="member-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600')"></div>
+                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600')"></div>
                 <div class="name">@Internet_blood</div>
                 <div class="quote">"Control the code, control the world."</div>
-                <button class="btn" onclick="openModal('Internet_blood')">Dossier</button>
+                <button class="btn" onclick="openModal('Internet_blood')">Открыть досье</button>
             </div>
             <div class="member-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=600')"></div>
+                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=600')"></div>
                 <div class="name">@Astroymovq</div>
                 <div class="quote">"Logic is the beginning of wisdom."</div>
-                <button class="btn" onclick="openModal('Astroymovq')">Dossier</button>
+                <button class="btn" onclick="openModal('Astroymovq')">Открыть досье</button>
             </div>
         </div>
 
-        <h2 class="category-title">Elite Coders</h2>
+        <h2 class="category-title">Elite Squad</h2>
         <div class="members-grid">
             <div class="member-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1510511459019-5dee997dd6ea?q=80&w=600')"></div>
+                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1510511459019-5dee997dd6ea?auto=format&fit=crop&q=80&w=600')"></div>
                 <div class="name">@smbog</div>
                 <div class="quote">"In darkness, we find the truth."</div>
-                <button class="btn" onclick="openModal('smbog')">Dossier</button>
+                <button class="btn" onclick="openModal('smbog')">Открыть досье</button>
             </div>
             <div class="member-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=600')"></div>
+                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=600')"></div>
                 <div class="name">@vkhertoon</div>
                 <div class="quote">"Digital soul, cold blood."</div>
-                <button class="btn" onclick="openModal('vkhertoon')">Dossier</button>
+                <button class="btn" onclick="openModal('vkhertoon')">Открыть досье</button>
             </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div id="m-name" style="font-family: 'Orbitron'; font-size: 1.5rem; color: #fff;"></div>
+            <div id="m-bio" class="m-bio"></div>
+            <a id="m-link" href="https://t.me/internet_blood" target="_blank" class="contact-link">УСТАНОВИТЬ СВЯЗЬ</a>
+            <button class="btn" style="margin-top: 20px;" onclick="closeModal()">Закрыть</button>
         </div>
     </div>
 
@@ -173,7 +146,6 @@
     <footer>EST. 2026 // COLD DEATH</footer>
 
     <script>
-        // АВТОЗВУК
         let started = false;
         function autoPlay() {
             if (!started) {
@@ -184,13 +156,31 @@
             }
         }
 
-        // ПАСХАЛКА: Нажми 'B' или долго жми на лого
-        document.addEventListener('keydown', (e) => {
-            if (e.key.toLowerCase() === 'b') showTerminal();
-        });
-        document.getElementById('logo-trigger').addEventListener('contextmenu', (e) => {
-            e.preventDefault(); showTerminal();
-        });
+        // КАРТОЧКИ
+        const data = {
+            'Internet_blood': { b: 'Основатель и главный идеолог подразделения. Ведет управление всеми ключевыми активами.', owner: true },
+            'Astroymovq': { b: 'Заместитель главы. Ответственен за координацию состава и техническую инфраструктуру клана.', owner: false },
+            'smbog': { b: 'Элитный оперативник. Специалист по защите внутренней информации и контрразведке.', owner: false },
+            'vkhertoon': { b: 'Полевой агент высокого класса. Прошел проверку временем в сложнейших операциях.', owner: false }
+        };
+
+        function openModal(id) {
+            const user = data[id];
+            document.getElementById('m-name').innerText = '@' + id;
+            document.getElementById('m-bio').innerText = user.b;
+            document.getElementById('m-link').style.display = user.owner ? 'inline-block' : 'none';
+            document.getElementById('modal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+        // ПАСХАЛКА
+        let logo = document.getElementById('logo-trigger');
+        let pressTimer;
+        logo.addEventListener('touchstart', () => pressTimer = setTimeout(showTerminal, 1000));
+        logo.addEventListener('mousedown', () => pressTimer = setTimeout(showTerminal, 1000));
+        logo.addEventListener('mouseup', () => clearTimeout(pressTimer));
+        logo.addEventListener('touchend', () => clearTimeout(pressTimer));
+        document.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'b') showTerminal(); });
 
         function showTerminal() {
             document.getElementById('secret-terminal').style.display = 'block';
@@ -199,8 +189,8 @@
 
         document.getElementById('pass-input').addEventListener('input', (e) => {
             if (e.target.value.toLowerCase() === 'blood') {
-                document.getElementById('terminal-msg').innerHTML = "<span style='color:#0f0'>ACCESS GRANTED. WELCOME, CREATOR.</span>";
-                setTimeout(() => { location.href = 'https://t.me/internet_blood'; }, 1500);
+                document.getElementById('terminal-msg').innerHTML = "<span style='color:#0f0'>ACCESS GRANTED.</span>";
+                setTimeout(() => { location.href = 'https://t.me/internet_blood'; }, 1000);
             }
         });
 
@@ -210,28 +200,14 @@
         let particles = [];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.onresize = resize; resize();
-
         class Snowflake {
             constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height - canvas.height;
-                this.size = Math.random() * 2;
-                this.speed = Math.random() * 0.5 + 0.2;
-                this.opacity = Math.random() * 0.3;
-            }
+            reset() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height - canvas.height; this.size = Math.random() * 2; this.speed = Math.random() * 0.5 + 0.2; this.opacity = Math.random() * 0.3; }
             update() { this.y += this.speed; if (this.y > canvas.height) this.reset(); }
-            draw() {
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-            }
+            draw() { ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
         }
-        for (let i = 0; i < 60; i++) particles.push(new Snowflake());
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
+        for (let i = 0; i < 50; i++) particles.push(new Snowflake());
+        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
         animate();
     </script>
 </body>
