@@ -3,275 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>❄️ Холодная Смерть | Legacy Elite ❄️</title>
+    <title>❄️ Холодная Смерть | Legacy ❄️</title>
     <style>
-        /* --- ПЕРЕМЕННЫЕ И ОСНОВА --- */
         :root {
             --bg-color: #030303;
             --card-bg: #0a0a0a;
             --text-main: #f0f0f0;
-            --text-muted: #555;
             --accent: #fff;
-            --shadow-neon: 0 0 15px rgba(255, 255, 255, 0.4);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --font-mono: 'Courier New', Courier, monospace;
         }
 
+        /* Общие настройки */
         * { box-sizing: border-box; cursor: none !important; }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0; padding: 0;
-            overflow-x: hidden;
-            line-height: 1.6;
+        body { 
+            background: var(--bg-color); 
+            color: var(--text-main); 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            overflow-x: hidden; 
+            min-height: 100vh;
         }
 
-        /* --- КАСТОМНЫЙ КУРСОР --- */
-        #cursor {
-            width: 20px; height: 20px;
-            border: 1px solid var(--accent);
-            border-radius: 50%;
+        /* АНИМАЦИЯ СНЕГА */
+        .snow-wrapper {
             position: fixed;
-            transform: translate(-50%, -50%);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
             pointer-events: none;
-            z-index: 10000;
-            transition: width 0.2s, height 0.2s;
+            background: #000;
         }
-        @media (max-width: 768px) { * { cursor: auto !important; } #cursor { display: none; } }
 
-        /* --- АНИМАЦИЯ СНЕГА --- */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
-                radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 1.5px);
-            background-size: 400px 400px, 200px 200px;
-            animation: snow 40s linear infinite;
-            opacity: 0.1; z-index: -2;
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: #fff;
+            user-select: none;
+            z-index: -1;
+            opacity: 0.6;
+            animation: fall linear infinite;
         }
-        @keyframes snow { 0% { background-position: 0 0; } 100% { background-position: 400px 800px; } }
 
-        /* --- ХЕДЕР С ГЛИТЧЕМ --- */
+        @keyframes fall {
+            to { transform: translateY(105vh); }
+        }
+
+        /* ШАПКА */
         header {
-            height: 100vh;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-align: center;
-            background: radial-gradient(circle at center, #111 0%, #030303 100%);
+            height: 40vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
         }
 
-        .clan-logo {
-            font-size: clamp(3rem, 10vw, 5rem);
-            text-transform: uppercase;
-            letter-spacing: 0.8rem;
+        .clan-logo { 
+            font-size: clamp(1.8rem, 6vw, 3.5rem); 
+            text-transform: uppercase; 
+            letter-spacing: 0.7rem; 
             color: var(--accent);
-            position: relative;
-            text-shadow: var(--shadow-neon);
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
 
-        .clan-logo:hover { animation: glitch 0.3s infinite; }
-
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-3px, 2px); text-shadow: 2px 0 red; }
-            40% { transform: translate(3px, -2px); text-shadow: -2px 0 blue; }
-            100% { transform: translate(0); }
-        }
-
-        .clan-subtitle {
-            font-size: 1rem; color: var(--text-muted);
-            font-family: var(--font-mono); margin-top: 1rem;
-            letter-spacing: 0.2rem;
-        }
-
-        /* --- КОНТЕЙНЕР --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        /* КОНТЕНТ */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1rem; position: relative; }
 
         .category-title {
-            font-size: 1.5rem; border-left: 2px solid var(--accent);
-            padding-left: 1rem; margin: 4rem 0 2rem;
-            text-transform: uppercase; letter-spacing: 0.3rem;
-            font-family: var(--font-mono);
+            font-size: 0.8rem; border-left: 1px solid #333; padding-left: 8px;
+            margin: 1.2rem 0 0.6rem; text-transform: uppercase; letter-spacing: 0.2rem; color: #444;
         }
 
-        /* --- КАРТОЧКИ --- */
-        .members-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+        .members-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 0.7rem; 
         }
 
-        .member-card {
-            background: var(--card-bg);
-            border: 1px solid #111;
-            transition: var(--transition);
-            position: relative;
+        .member-card { 
+            background: var(--card-bg); 
+            border: 1px solid #111; 
+            transition: 0.3s; 
         }
-
-        .member-card:hover { transform: translateY(-10px); border-color: #333; }
+        
+        .member-card:hover { border-color: #444; }
 
         .photo-box {
-            width: 100%; height: 300px;
+            width: 100%; height: 230px; 
             background-size: cover; background-position: center;
-            filter: grayscale(1) brightness(0.7);
+            filter: grayscale(1) brightness(0.4); 
             transition: 0.5s;
         }
+        
+        .member-card:hover .photo-box { filter: grayscale(0.5) brightness(0.6); }
 
-        .member-card:hover .photo-box { filter: grayscale(0.5) brightness(1); }
-
-        .info { padding: 1.5rem; }
-        .role { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1rem; }
-        .name { font-size: 1.2rem; margin: 0.5rem 0 1.5rem; color: var(--accent); }
-
-        .owner-card .name { text-shadow: 0 0 10px #fff; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        .info { padding: 0.6rem; }
+        .role { font-size: 0.5rem; color: #333; text-transform: uppercase; letter-spacing: 1px; }
+        .name { font-size: 0.9rem; margin: 0.2rem 0 0.6rem; color: var(--accent); }
 
         .btn {
-            background: transparent; border: 1px solid #222;
-            color: var(--text-muted); padding: 0.8rem; width: 100%;
-            font-family: var(--font-mono); text-transform: uppercase;
-            cursor: pointer; transition: 0.3s;
+            background: transparent; border: 1px solid #151515; color: #555; padding: 0.4rem;
+            width: 100%; font-family: var(--font-mono); text-transform: uppercase; font-size: 0.6rem; cursor: pointer;
         }
         .btn:hover { border-color: #fff; color: #fff; }
 
-        /* --- МОДАЛКА --- */
+        /* МОДАЛЬНОЕ ОКНО */
         .modal {
-            display: none; position: fixed; z-index: 1000;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
-            align-items: center; justify-content: center;
+            display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.98); align-items: center; justify-content: center;
         }
         .modal-content {
-            background: #0a0a0a; padding: 3rem; width: 90%; max-width: 500px;
-            border: 1px solid #222; position: relative;
+            background: #050505; padding: 1.2rem; width: 85%; max-width: 350px;
+            border: 1px solid #222; text-align: center;
         }
-        .close { position: absolute; top: 1rem; right: 1rem; font-size: 2rem; color: var(--text-muted); cursor: pointer; }
-        .m-bio { margin: 1.5rem 0; color: #ccc; border-top: 1px solid #111; padding-top: 1.5rem; }
+        .m-bio { margin: 0.7rem 0; color: #666; font-size: 0.8rem; line-height: 1.4; }
+        
         .contact-link {
-            display: block; background: #fff; color: #000; text-align: center;
-            padding: 1rem; font-weight: bold; text-decoration: none;
-            font-family: var(--font-mono); margin-top: 2rem;
+            display: none; border: 1px solid #fff; color: #fff; text-decoration: none;
+            padding: 0.6rem; font-family: var(--font-mono); font-size: 0.7rem; transition: 0.2s;
+            margin-top: 10px;
         }
+        .contact-link:hover { background: #fff; color: #000; }
 
-        /* --- ТЕРМИНАЛ --- */
-        .terminal { text-align: center; padding: 5rem 0; }
+        /* НИЗ */
+        .terminal { text-align: center; padding: 2rem 0; }
         .t-input {
-            background: transparent; border: none; border-bottom: 1px solid #222;
-            color: #555; font-family: var(--font-mono); text-align: center; padding: 10px; width: 200px;
+            background: transparent; border: none; border-bottom: 1px solid #111;
+            color: #222; font-family: var(--font-mono); text-align: center; width: 120px; font-size: 0.7rem;
         }
-        .t-input:focus { outline: none; border-color: #fff; color: #fff; }
+        .t-input:focus { outline: none; border-bottom-color: #444; color: #444; }
 
-        body.blood-flash { animation: flash 0.5s; }
-        @keyframes flash { 0% { background: #300; } 100% { background: #030303; } }
-
-        footer { text-align: center; padding: 3rem; color: #222; font-family: var(--font-mono); font-size: 0.8rem; }
+        footer { text-align: center; padding: 1.5rem; color: #111; font-family: var(--font-mono); font-size: 0.5rem; }
+        
+        /* КУРСОР */
+        #cursor { 
+            width: 8px; height: 8px; background: #fff; border-radius: 50%; 
+            position: fixed; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); 
+            mix-blend-mode: difference;
+        }
+        @media (max-width: 768px) { #cursor { display: none; } * { cursor: auto !important; } }
     </style>
 </head>
 <body onclick="startMusic()">
 
     <div id="cursor"></div>
+    <div class="snow-wrapper" id="snow"></div>
 
     <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3" type="audio/mpeg">
+        <source src="https://prosearch.tribeofnoise.com/music/open/11697/1" type="audio/mpeg">
     </audio>
 
     <header>
         <div class="clan-logo">Холодная Смерть</div>
-        <div class="clan-subtitle">> LEGACY_ELITE_SYSTEM_</div>
     </header>
 
     <div class="container">
         
-        <h2 class="category-title">:: РУКОВОДСТВО_</h2>
+        <h2 class="category-title">// ADMINISTRATION</h2>
         <div class="members-grid">
-            <div class="member-card owner-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?q=80&w=600')"></div>
+            <div class="member-card">
+                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1514467950401-6d88ff11696f?q=80&w=600')"></div>
                 <div class="info">
-                    <div class="role">Создатель</div>
+                    <div class="role">Founder</div>
                     <div class="name">@Internet_blood</div>
-                    <button class="btn" onclick="openModal('Internet_blood')">Досье</button>
+                    <button class="btn" onclick="openModal('Internet_blood')">Access Bio</button>
                 </div>
             </div>
             <div class="member-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600')"></div>
+                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=600')"></div>
                 <div class="info">
-                    <div class="role">Заместитель</div>
+                    <div class="role">Deputy</div>
                     <div class="name">@Astroymovq</div>
-                    <button class="btn" onclick="openModal('Astroymovq')">Досье</button>
+                    <button class="btn" onclick="openModal('Astroymovq')">Access Bio</button>
                 </div>
             </div>
         </div>
 
-        <h2 class="category-title">:: ЛЕГЕНДЫ_</h2>
+        <h2 class="category-title">// ELITE FORCE</h2>
         <div class="members-grid">
             <div class="member-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=600')"></div>
+                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?q=80&w=600')"></div>
                 <div class="info">
-                    <div class="role">Бог Анонимности</div>
+                    <div class="role">Special Ops</div>
                     <div class="name">@smbog</div>
-                    <button class="btn" onclick="openModal('smbog')">Досье</button>
+                    <button class="btn" onclick="openModal('smbog')">Access Bio</button>
                 </div>
             </div>
             <div class="member-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1580894732444-8feaff7ae726?q=80&w=600')"></div>
+                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=600')"></div>
                 <div class="info">
-                    <div class="role">Ньюген</div>
+                    <div class="role">Newgen</div>
                     <div class="name">@vkhertoon</div>
-                    <button class="btn" onclick="openModal('vkhertoon')">Досье</button>
-                </div>
-            </div>
-            <div class="member-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=600')"></div>
-                <div class="info">
-                    <div class="role">Арес</div>
-                    <div class="name">@necrolustov</div>
-                    <button class="btn" onclick="openModal('necrolustov')">Досье</button>
+                    <button class="btn" onclick="openModal('vkhertoon')">Access Bio</button>
                 </div>
             </div>
         </div>
 
         <div class="terminal">
-            <input type="text" id="term" class="t-input" placeholder="> Введите код_">
+            <input type="text" id="term" class="t-input" placeholder="sys_code">
         </div>
     </div>
 
-    <footer>[ SYSTEM: HOLODNAYA SMERT // 2026 ]</footer>
+    <footer>EST. 2026 // COLD DEATH</footer>
 
     <div id="modal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div id="m-name" style="font-size: 2rem; font-weight: bold;"></div>
-            <div id="m-role" style="color: #555; text-transform: uppercase; font-size: 0.8rem; margin-top: 5px;"></div>
+            <div id="m-name" style="font-size: 1.1rem; letter-spacing: 1px;"></div>
+            <div id="m-role" style="color: #333; font-size: 0.6rem; margin-top: 2px;"></div>
             <div id="m-bio" class="m-bio"></div>
-            <a href="https://t.me/internet_blood" target="_blank" class="contact-link">СВЯЗАТЬСЯ В TELEGRAM</a>
+            <a id="m-link" href="https://t.me/internet_blood" target="_blank" class="contact-link">ESTABLISH CONNECTION</a>
         </div>
     </div>
 
     <script>
-        // Курсор
-        const cur = document.getElementById('cursor');
-        document.addEventListener('mousemove', e => { cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px'; });
+        // СНЕГ
+        function createSnow() {
+            const snowWrapper = document.getElementById('snow');
+            const count = 45; 
+            for (let i = 0; i < count; i++) {
+                const flake = document.createElement('div');
+                flake.className = 'snowflake';
+                flake.innerHTML = '❄'; 
+                flake.style.left = Math.random() * 100 + 'vw';
+                flake.style.fontSize = (Math.random() * 8 + 4) + 'px';
+                flake.style.opacity = Math.random() * 0.5 + 0.2;
+                flake.style.animationDuration = (Math.random() * 4 + 5) + 's';
+                flake.style.animationDelay = Math.random() * 5 + 's';
+                snowWrapper.appendChild(flake);
+            }
+        }
+        createSnow();
 
-        // Музыка
+        // КУРСОР
+        const cur = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => { 
+            cur.style.left = e.clientX + 'px'; 
+            cur.style.top = e.clientY + 'px'; 
+        });
+
+        // МУЗЫКА
         let mStarted = false;
         function startMusic() {
             if (!mStarted) {
                 const a = document.getElementById('bg-music');
-                a.volume = 0.1; a.play(); mStarted = true;
+                a.volume = 0.05; 
+                a.play().catch(() => {}); 
+                mStarted = true;
             }
         }
 
-        // Данные
+        // ДАННЫЕ УЧАСТНИКОВ
         const data = {
-            'Internet_blood': { r: 'Создатель', b: 'Не хотел оставлять свою карьеру в комьюнити до последнего и пришел еще валидником.' },
-            'Astroymovq': { r: 'Заместитель', b: 'Протянул руку помощи овнеру и никогда не сомневался в нем. Дата Лива: 01.03.2026.' },
-            'smbog': { r: 'Бог Анонимности', b: 'Первый деф овнера. Подарил знания и буквально шатал всё комьюнити.' },
-            'vkhertoon': { r: 'Ньюген', b: 'Пришел в момент основания. Нашел свой путь в жизни несмотря на любые проблемы.' },
-            'necrolustov': { r: 'Арес', b: 'Ветеран со времен ВК. Один из сильнейших воинов в истории комьюнити.' }
+            'Internet_blood': { r: 'Founder', b: 'Лидер и основатель клана. Начал путь как валидник.', isOwner: true },
+            'Astroymovq': { r: 'Deputy', b: 'Верный заместитель. Поддержал проект в трудные времена.', isOwner: false },
+            'smbog': { r: 'Special Ops', b: 'Мастер анонимности. Первый деф овнера.', isOwner: false },
+            'vkhertoon': { r: 'Newgen', b: 'Новая кровь системы. Прошел путь вопреки преградам.', isOwner: false }
         };
 
         function openModal(id) {
@@ -279,21 +264,17 @@
             document.getElementById('m-name').innerText = '@' + id;
             document.getElementById('m-role').innerText = m.r;
             document.getElementById('m-bio').innerText = m.b;
+            const link = document.getElementById('m-link');
+            link.style.display = m.isOwner ? 'block' : 'none';
             document.getElementById('modal').style.display = 'flex';
         }
 
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
-        // Терминал
+        // ТЕРМИНАЛ
         document.getElementById('term').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                if (this.value.toLowerCase() === 'blood') {
-                    document.body.classList.add('blood-flash');
-                    setTimeout(() => window.location.href = "https://t.me/internet_blood", 600);
-                } else {
-                    this.value = 'DENIED';
-                    setTimeout(() => this.value = '', 800);
-                }
+            if (e.key === 'Enter' && this.value.toLowerCase() === 'blood') {
+                window.location.href = "https://t.me/internet_blood";
             }
         });
     </script>
