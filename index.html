@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>❄️ Холодная Смерть | Legacy Elite ❄️</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
         :root {
-            --bg-color: #0d0d0d;
-            --card-bg: #1a1a1a; /* Чуть светлее для объема */
-            --text-main: #e0e0e0;
-            --text-dim: #888;
+            --bg-color: #080808;
+            --card-bg: #121212;
+            --text-main: #d0d0d0;
             --accent: #ffffff;
+            --font-logo: 'Orbitron', sans-serif;
             --font-mono: 'Courier New', Courier, monospace;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * { box-sizing: border-box; cursor: crosshair; }
@@ -20,12 +21,11 @@
         body { 
             background: var(--bg-color); 
             color: var(--text-main); 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            font-family: 'Inter', sans-serif; 
             margin: 0; 
             display: flex;
             flex-direction: column;
             align-items: center; 
-            text-align: center; 
             overflow-x: hidden;
         }
 
@@ -34,155 +34,87 @@
             z-index: -1; pointer-events: none;
         }
 
-        header { padding: 80px 20px 20px; }
-        
+        /* ЗАГОЛОВОК С НОВЫМ ШРИФТОМ */
+        header { padding: 100px 20px 40px; text-align: center; }
         .clan-logo { 
-            font-size: clamp(2rem, 8vw, 3.5rem); 
-            letter-spacing: 12px; 
+            font-family: var(--font-logo);
+            font-size: clamp(1.5rem, 7vw, 3rem); 
+            letter-spacing: 18px; 
             text-transform: uppercase;
-            font-weight: 300;
             color: var(--accent);
-            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255,255,255,0.2);
+            margin-bottom: 5px;
+            user-select: none;
         }
 
-        .container { width: 100%; max-width: 1000px; padding: 20px; }
+        .container { width: 100%; max-width: 1100px; padding: 20px; }
 
         .category-title {
-            font-size: 0.75rem; 
-            color: #555; 
-            letter-spacing: 6px;
-            margin: 60px 0 30px; 
-            text-transform: uppercase;
-            border-bottom: 1px solid #222;
-            padding-bottom: 10px;
+            font-size: 0.7rem; color: #444; letter-spacing: 8px;
+            margin: 60px 0 30px; text-transform: uppercase; text-align: center;
         }
 
         /* КАРТОЧКИ */
         .members-grid { 
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; 
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 35px; 
         }
 
         .member-card { 
             background: var(--card-bg); 
-            border: 1px solid #282828;
-            width: 300px; 
-            padding: 25px; 
-            transition: var(--transition);
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
+            border: 1px solid #1a1a1a;
+            width: 310px; padding: 20px; 
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 2px;
         }
         
         .member-card:hover { 
-            border-color: #666; 
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            border-color: #444; 
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
 
         .photo-box {
-            width: 100%; 
-            height: 280px; 
-            background-size: cover; 
-            background-position: center;
-            filter: grayscale(0.3) brightness(0.9); 
+            width: 100%; height: 320px; 
+            background-size: cover; background-position: center;
+            filter: grayscale(1) contrast(1.2) brightness(0.6); 
             margin-bottom: 20px; 
-            border: 1px solid #333;
-            border-radius: 4px;
+            border: 1px solid #222;
+            transition: 0.5s;
         }
+        .member-card:hover .photo-box { filter: grayscale(0.6) brightness(0.8); }
 
         .name { 
-            font-size: 1.2rem; 
-            margin-bottom: 10px; 
-            letter-spacing: 1px; 
-            font-weight: 500;
-            color: #fff;
+            font-family: var(--font-logo); font-size: 1rem; 
+            margin-bottom: 10px; letter-spacing: 3px; color: #fff;
         }
 
-        /* ЦИТАТА */
         .quote {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: #666;
-            margin-bottom: 20px;
-            font-style: italic;
-            line-height: 1.4;
-            min-height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-family: var(--font-mono); font-size: 0.7rem;
+            color: #555; margin-bottom: 20px; font-style: italic; min-height: 45px;
         }
 
-        /* КНОПКА */
         .btn {
-            background: transparent; 
-            border: 1px solid #333; 
-            color: #bbb;
-            padding: 14px; 
-            width: 100%; 
-            font-family: var(--font-mono);
-            text-transform: uppercase; 
-            font-size: 0.7rem; 
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: var(--transition); 
-            outline: none;
-            margin-top: auto;
+            background: transparent; border: 1px solid #333; color: #888;
+            padding: 12px; width: 100%; font-family: var(--font-mono);
+            text-transform: uppercase; font-size: 0.7rem; cursor: pointer;
+            transition: 0.3s;
         }
-        
-        .btn:hover { 
-            border-color: #fff; 
-            color: #fff; 
+        .btn:active { transform: scale(0.95); background: #fff; color: #000; box-shadow: 0 0 20px #fff; }
+
+        /* ПАСХАЛКА-ТЕРМИНАЛ */
+        #secret-terminal {
+            display: none; position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%; max-width: 500px;
+            background: #000; border: 1px solid #333;
+            padding: 30px; z-index: 2000; font-family: var(--font-mono);
         }
-        
-        .btn:active { 
-            transform: scale(0.96); 
-            background: #fff; 
-            color: #000; 
-            box-shadow: 0 0 30px rgba(255,255,255,0.4);
+        #secret-terminal input {
+            background: transparent; border: none; border-bottom: 1px solid #333;
+            color: #0f0; width: 100%; outline: none; padding: 10px 0; margin-top: 20px;
         }
 
-        /* ТЕРМИНАЛ-ПАСХАЛКА */
-        .easter-egg {
-            margin: 100px 0 60px; 
-            padding: 25px;
-            background: #080808; 
-            border-left: 3px solid #333;
-            width: 90%; 
-            max-width: 650px; 
-            font-family: var(--font-mono);
-            text-align: left; 
-            font-size: 0.75rem; 
-            color: #444;
-        }
-
-        /* МОДАЛЬНОЕ ОКНО */
-        .modal {
-            display: none; position: fixed; z-index: 1000; top: 0; left: 0;
-            width: 100%; height: 100%; background: rgba(5,5,5,0.96);
-            align-items: center; justify-content: center;
-            backdrop-filter: blur(8px);
-        }
-        
-        .modal-content {
-            background: #111; 
-            border: 1px solid #333; 
-            padding: 40px;
-            max-width: 450px; 
-            width: 90%;
-            border-radius: 12px;
-        }
-        
-        .m-bio { color: var(--text-dim); font-size: 1rem; margin: 30px 0; line-height: 1.8; }
-        
-        .contact-link {
-            display: inline-block; padding: 14px 30px; border: 1px solid #fff;
-            color: #fff; text-decoration: none; font-size: 0.8rem;
-            letter-spacing: 2px; transition: 0.3s;
-        }
-        
-        .contact-link:hover { background: #fff; color: #000; }
-
-        footer { padding: 80px; color: #222; font-size: 0.65rem; letter-spacing: 6px; }
+        footer { padding: 100px; color: #1a1a1a; font-size: 0.6rem; letter-spacing: 10px; text-align: center; }
     </style>
 </head>
 <body onclick="autoPlay()">
@@ -194,62 +126,54 @@
     </audio>
 
     <header>
-        <div class="clan-logo">Холодная Смерть</div>
-        <div style="color: #444; font-size: 0.65rem; letter-spacing: 8px;">SYSTEM INTERFACE // V 2.1</div>
+        <div class="clan-logo" id="logo-trigger">Холодная Смерть</div>
+        <div style="color: #222; font-size: 0.6rem; letter-spacing: 5px;">[ ENCRYPTED_CORE ]</div>
     </header>
 
     <div class="container">
-        <h2 class="category-title">Administration</h2>
+        <h2 class="category-title">System Administrators</h2>
         <div class="members-grid">
             <div class="member-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1514467950401-6d88ff11696f?q=80&w=600')"></div>
+                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600')"></div>
                 <div class="name">@Internet_blood</div>
-                <div class="quote">"Писать код — это как строить замок из чистого воображения."</div>
-                <button class="btn" onclick="openModal('Internet_blood')">Открыть досье</button>
+                <div class="quote">"Control the code, control the world."</div>
+                <button class="btn" onclick="openModal('Internet_blood')">Dossier</button>
             </div>
             <div class="member-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=600')"></div>
+                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=600')"></div>
                 <div class="name">@Astroymovq</div>
-                <div class="quote">"Любой дурак может написать код, понятный компьютеру. Хорошие программисты пишут код, понятный людям."</div>
-                <button class="btn" onclick="openModal('Astroymovq')">Открыть досье</button>
+                <div class="quote">"Logic is the beginning of wisdom."</div>
+                <button class="btn" onclick="openModal('Astroymovq')">Dossier</button>
             </div>
         </div>
 
-        <h2 class="category-title">Elite Squad</h2>
+        <h2 class="category-title">Elite Coders</h2>
         <div class="members-grid">
             <div class="member-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?q=80&w=600')"></div>
+                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1510511459019-5dee997dd6ea?q=80&w=600')"></div>
                 <div class="name">@smbog</div>
-                <div class="quote">"Чтобы понять рекурсию, нужно сначала понять рекурсию."</div>
-                <button class="btn" onclick="openModal('smbog')">Открыть досье</button>
+                <div class="quote">"In darkness, we find the truth."</div>
+                <button class="btn" onclick="openModal('smbog')">Dossier</button>
             </div>
             <div class="member-card">
-                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=600')"></div>
+                <div class="photo-box" style="background-image: url('https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=600')"></div>
                 <div class="name">@vkhertoon</div>
-                <div class="quote">"Лучший способ предсказать будущее — создать его через код."</div>
-                <button class="btn" onclick="openModal('vkhertoon')">Открыть досье</button>
+                <div class="quote">"Digital soul, cold blood."</div>
+                <button class="btn" onclick="openModal('vkhertoon')">Dossier</button>
             </div>
         </div>
-
-        <div class="easter-egg">
-            <div>> DECRYPTING_DATABASE... [SUCCESS]</div>
-            <div>> WELCOME_BACK_OPERATIVE</div>
-            <div>> QUOTE_OF_THE_DAY: CODE_IS_POETRY</div>
-            <div style="margin-top:15px; color:#1a1a1a"># CLAN_TAG: COLD_DEATH_2026</div>
-        </div>
     </div>
 
-    <footer>COLD DEATH // LEGACY REMAINS</footer>
-
-    <div id="modal" class="modal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div id="m-name" style="font-size: 1.6rem; letter-spacing: 3px; font-weight: 300;"></div>
-            <div id="m-bio" class="m-bio"></div>
-            <a id="m-link" href="https://t.me/internet_blood" target="_blank" class="contact-link">СВЯЗАТЬСЯ</a>
-        </div>
+    <div id="secret-terminal">
+        <div style="color: #fff; font-size: 0.8rem;">[ ENTER ACCESS KEY ]</div>
+        <input type="password" id="pass-input" placeholder="...">
+        <div id="terminal-msg" style="margin-top: 15px; font-size: 0.7rem; color: #444;">Status: Waiting...</div>
     </div>
+
+    <footer>EST. 2026 // COLD DEATH</footer>
 
     <script>
+        // АВТОЗВУК
         let started = false;
         function autoPlay() {
             if (!started) {
@@ -260,6 +184,27 @@
             }
         }
 
+        // ПАСХАЛКА: Нажми 'B' или долго жми на лого
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'b') showTerminal();
+        });
+        document.getElementById('logo-trigger').addEventListener('contextmenu', (e) => {
+            e.preventDefault(); showTerminal();
+        });
+
+        function showTerminal() {
+            document.getElementById('secret-terminal').style.display = 'block';
+            document.getElementById('pass-input').focus();
+        }
+
+        document.getElementById('pass-input').addEventListener('input', (e) => {
+            if (e.target.value.toLowerCase() === 'blood') {
+                document.getElementById('terminal-msg').innerHTML = "<span style='color:#0f0'>ACCESS GRANTED. WELCOME, CREATOR.</span>";
+                setTimeout(() => { location.href = 'https://t.me/internet_blood'; }, 1500);
+            }
+        });
+
+        // СНЕГ
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -271,9 +216,9 @@
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height - canvas.height;
-                this.size = Math.random() * 2 + 0.5;
+                this.size = Math.random() * 2;
                 this.speed = Math.random() * 0.5 + 0.2;
-                this.opacity = Math.random() * 0.3 + 0.1;
+                this.opacity = Math.random() * 0.3;
             }
             update() { this.y += this.speed; if (this.y > canvas.height) this.reset(); }
             draw() {
@@ -288,22 +233,6 @@
             requestAnimationFrame(animate);
         }
         animate();
-
-        const data = {
-            'Internet_blood': { b: 'Основатель и главный стратег подразделения «Холодная Смерть». Ведет управление всеми ключевыми активами.', owner: true },
-            'Astroymovq': { b: 'Заместитель главы. Ответственен за координацию состава и техническую инфраструктуру клана.', owner: false },
-            'smbog': { b: 'Элитный оперативник. Специалист по защите внутренней информации и контрразведке.', owner: false },
-            'vkhertoon': { b: 'Полевой агент высокого класса. Прошел проверку временем в сложнейших операциях.', owner: false }
-        };
-
-        function openModal(id) {
-            const user = data[id];
-            document.getElementById('m-name').innerText = '@' + id;
-            document.getElementById('m-bio').innerText = user.b;
-            document.getElementById('m-link').style.display = user.owner ? 'inline-block' : 'none';
-            document.getElementById('modal').style.display = 'flex';
-        }
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
     </script>
 </body>
 </html>
